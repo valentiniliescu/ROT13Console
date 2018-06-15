@@ -13,9 +13,9 @@
             _cli = cli;
         }
 
-        public string Run()
+        public void Run()
         {
-            return ROT13Encoder.Encode(_cli.Arg);
+            _cli.Output(ROT13Encoder.Encode(_cli.Arg));
         }
     }
 }
