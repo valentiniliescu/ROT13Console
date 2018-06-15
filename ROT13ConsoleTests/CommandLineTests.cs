@@ -81,5 +81,23 @@ namespace ROT13ConsoleTests
                 Console.SetOut(consoleOutTemp);
             }
         }
+
+        [TestMethod]
+        public void ProvidesLastLineWrittenToConsole()
+        {
+            var consoleOutTemp = Console.Out;
+            Console.SetOut(TextWriter.Null);
+
+            try
+            {
+                var cli = CommandLine.Create();
+                cli.Output("test");
+                cli.LastMessage.Should().Be("test");
+            }
+            finally
+            {
+                Console.SetOut(consoleOutTemp);
+            }
+        }
     }
 }

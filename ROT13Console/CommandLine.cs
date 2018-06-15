@@ -3,7 +3,7 @@
     public class CommandLine
     {
         private readonly ICommandLineArgs _commandLineArgs;
-        private IConsole _console;
+        private readonly IConsole _console;
 
         public CommandLine(ICommandLineArgs commandLineArgs, IConsole console)
         {
@@ -12,6 +12,7 @@
         }
 
         public string Arg => _commandLineArgs.Arg;
+        public string LastMessage { get; private set; }
 
         public static CommandLine Create()
         {
@@ -26,6 +27,7 @@
         public void Output(string message)
         {
             _console.WriteLine(message);
+            LastMessage = message;
         }
     }
 }
