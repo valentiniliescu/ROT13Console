@@ -1,15 +1,24 @@
-﻿using System;
-using System.Linq;
-
-namespace ROT13Console
+﻿namespace ROT13Console
 {
     public class CommandLine
     {
-        public string Arg => Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
+        private readonly ICommandLineArgs _commandLineArgs;
+
+        public CommandLine(ICommandLineArgs commandLineArgs)
+        {
+            _commandLineArgs = commandLineArgs;
+        }
+
+        public string Arg => _commandLineArgs.Arg;
 
         public static CommandLine Create()
         {
-            return new CommandLine();
+            return new CommandLine(new CommandLineArgs());
+        }
+
+        public static CommandLine CreateNull(string arg)
+        {
+            return new CommandLine(new NullCommandLineArgs(arg));
         }
     }
 }

@@ -10,9 +10,10 @@ namespace ROT13ConsoleTests
         [TestMethod]
         public void EncodesHello()
         {
-            var app = new App();
+            var cli = CommandLine.CreateNull("my_cli_arg");
+            var app = new App(cli);
             var expected = app.Run();
-            expected.Should().Be("uryyb");
+            expected.Should().Be("zl_pyv_net");
         }
     }
 }

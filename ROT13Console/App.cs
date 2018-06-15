@@ -2,10 +2,20 @@
 {
     public class App
     {
+        private readonly CommandLine _cli;
+
+        public App() : this(CommandLine.Create())
+        {
+        }
+
+        public App(CommandLine cli)
+        {
+            _cli = cli;
+        }
+
         public string Run()
         {
-            const string message = "hello";
-            return ROT13Encoder.Encode(message);
+            return ROT13Encoder.Encode(_cli.Arg);
         }
     }
 }

@@ -37,6 +37,9 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="CommandLine.cs" />
+    <Compile Include="CommandLineArgs.cs" />
+    <Compile Include="ICommandLineArgs.cs" />
+    <Compile Include="NullCommandLineArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ROT13Encoder.cs" />
   </ItemGroup>

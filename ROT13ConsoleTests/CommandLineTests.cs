@@ -16,5 +16,13 @@ namespace ROT13ConsoleTests
             var arg = cli.Arg;
             arg.Should().NotBeNull();
         }
+
+        [TestMethod]
+        public void ArgIsNullable()
+        {
+            var cli = CommandLine.CreateNull("my_arg");
+
+            cli.Arg.Should().Be("my_arg");
+        }
     }
 }
