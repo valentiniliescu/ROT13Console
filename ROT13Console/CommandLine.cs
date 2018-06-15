@@ -3,22 +3,29 @@
     public class CommandLine
     {
         private readonly ICommandLineArgs _commandLineArgs;
+        private IConsole _console;
 
-        public CommandLine(ICommandLineArgs commandLineArgs)
+        public CommandLine(ICommandLineArgs commandLineArgs, IConsole console)
         {
             _commandLineArgs = commandLineArgs;
+            _console = console;
         }
 
         public string Arg => _commandLineArgs.Arg;
 
         public static CommandLine Create()
         {
-            return new CommandLine(new CommandLineArgs());
+            return new CommandLine(new CommandLineArgs(), new ConsoleWrapper());
         }
 
         public static CommandLine CreateNull(string arg)
         {
-            return new CommandLine(new NullCommandLineArgs(arg));
+            return new CommandLine(new NullCommandLineArgs(arg), new NullConsole());
+        }
+
+        public void Output(string message)
+        {
+            _console.WriteLine(message);
         }
     }
 }

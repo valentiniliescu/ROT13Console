@@ -1,4 +1,7 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.IO;
+using System.Text;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ROT13Console;
 
@@ -18,11 +21,65 @@ namespace ROT13ConsoleTests
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
+        public void WritesToConsole()
+        {
+            var consoleOutTemp = Console.Out;
+
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                using (var tw = new StreamWriter(memoryStream))
+                {
+                    Console.SetOut(tw);
+                    var cli = CommandLine.Create();
+
+                    cli.Output("test");
+
+                    tw.Flush();
+
+                    var outputValue = Encoding.Default.GetString(memoryStream.ToArray());
+                    outputValue.Should().Be("test" + Environment.NewLine);
+                }
+            }
+            finally
+            {
+                Console.SetOut(consoleOutTemp);
+            }
+        }
+
+        [TestMethod]
         public void ArgIsNullable()
         {
             var cli = CommandLine.CreateNull("my_arg");
 
             cli.Arg.Should().Be("my_arg");
+        }
+
+        [TestMethod]
+        public void ConsoleIsNullable()
+        {
+            var consoleOutTemp = Console.Out;
+
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                using (var tw = new StreamWriter(memoryStream))
+                {
+                    Console.SetOut(tw);
+                    var cli = CommandLine.CreateNull("my_cli_arg");
+
+                    cli.Output("test");
+
+                    tw.Flush();
+
+                    memoryStream.Position.Should().Be(0);
+                }
+            }
+            finally
+            {
+                Console.SetOut(consoleOutTemp);
+            }
         }
     }
 }
